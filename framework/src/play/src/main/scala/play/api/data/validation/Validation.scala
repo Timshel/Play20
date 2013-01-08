@@ -75,6 +75,16 @@ trait Constraints {
   }
 
   /**
+   * Defines a ‘required’ constraint for `Optional` values, i.e. one in which None are invalid.
+   *
+   * '''name'''[constraint.required]
+   * '''error'''[error.required]
+   */
+  def nonNone[A]: Constraint[Option[A]] = Constraint[Option[A]]("constraint.required") { o =>
+    if (o.isEmpty) Invalid(ValidationError("error.required")) else Valid
+  }
+
+  /**
    * Defines a minimum value for `Int` values, i.e. the value must be greater than or equal to the constraint parameter
    *
    * '''name'''[constraint.min(minValue)]
